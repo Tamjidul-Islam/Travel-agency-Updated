@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 public class Main {
 
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
         while(true){
             System.out.println("Welcome to the Travel Agency System");
@@ -24,6 +23,8 @@ public class Main {
             } else if (choice == 2) {
                 EmployeeFunctionality employee = new EmployeeFunctionality();
                 employee.employeeMenu();
+
+
             } else {
                 System.out.println("Invalid choice. Exiting...");
                 System.exit(0);
@@ -516,10 +517,6 @@ class AdminFunctionality {
         }
     }
 
-
-
-
-
     private void manageEmployees() {
         employeeManager.manageEmployeesMenu();
     }
@@ -539,6 +536,16 @@ class AdminFunctionality {
 
 class EmployeeFunctionality {
 
+    private BookingManager bookingManager;
+    private ServiceManager serviceManager;
+    private CustomerManager customerManager;
+
+    public EmployeeFunctionality() {
+        bookingManager = new BookingManager();
+        serviceManager = new ServiceManager();
+        customerManager = new CustomerManager();
+    }
+
     public void employeeMenu() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -546,9 +553,9 @@ class EmployeeFunctionality {
             System.out.println("1. Booking");
             System.out.println("2. Services");
             System.out.println("3. Customer Management");
-            System.out.println("4. Transitions");
-            System.out.println("5. Exit");
+            System.out.println("4. Exit");
 
+            System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
 
             switch (choice) {
@@ -562,13 +569,10 @@ class EmployeeFunctionality {
                     customerManagement();
                     break;
                 case 4:
-                    transitions();
-                    break;
-                case 5:
                     System.out.println("Exiting Employee Menu...");
                     return;
                 default:
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid choice, please try again.");
             }
         }
     }
@@ -579,15 +583,20 @@ class EmployeeFunctionality {
         System.out.println("1. Hotel");
         System.out.println("2. Transport");
 
+        System.out.print("Choose an option: ");
         int choice = scanner.nextInt();
-        if (choice == 1) {
-            System.out.println("Booking Hotel...");
-            // Logic for hotel booking
-        } else if (choice == 2) {
-            System.out.println("Booking Transport...");
-            // Logic for transport booking
-        } else {
-            System.out.println("Invalid choice.");
+
+        switch (choice) {
+            case 1:
+                System.out.println("Hotel Booking Options:");
+                bookingManager.showHotelOptions();
+                break;
+            case 2:
+                System.out.println("Transport Booking Options:");
+                bookingManager.showTransportOptions();
+                break;
+            default:
+                System.out.println("Invalid choice.");
         }
     }
 
@@ -595,27 +604,209 @@ class EmployeeFunctionality {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Services Options:");
         System.out.println("1. Room Service");
-        System.out.println("2. Food");
+        System.out.println("2. Food Service");
 
+        System.out.print("Choose an option: ");
         int choice = scanner.nextInt();
-        if (choice == 1) {
-            System.out.println("Room Service...");
-            // Logic for room service
-        } else if (choice == 2) {
-            System.out.println("Ordering Food...");
-            // Logic for food service
-        } else {
-            System.out.println("Invalid choice.");
+
+        switch (choice) {
+            case 1:
+                System.out.println("Room Service Options:");
+                serviceManager.showRoomServiceOptions();
+                break;
+            case 2:
+                System.out.println("Food Service Options:");
+                serviceManager.showFoodOptions();
+                break;
+            default:
+                System.out.println("Invalid choice.");
         }
     }
 
     private void customerManagement() {
         System.out.println("Managing Customers...");
-        // Logic for customer management
+        customerManager.manageCustomer();
     }
 
-    private void transitions() {
-        System.out.println("Handling Transitions...");
-        // Logic for transitions
+    public class BookingManager {
+
+        public void showHotelOptions() {
+            System.out.println("1. 5-Star Hotel - $1000");
+            System.out.println("2. 3-Star Hotel - $500");
+            System.out.println("3. Low Budget Hotel - $200");
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Choose a hotel option: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("You have booked a 5-Star Hotel for $1000.");
+                    break;
+                case 2:
+                    System.out.println("You have booked a 3-Star Hotel for $500.");
+                    break;
+                case 3:
+                    System.out.println("You have booked a Low Budget Hotel for $200.");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+
+        public void showTransportOptions() {
+            System.out.println("1. Plane - $1500");
+            System.out.println("2. Boat - $1000");
+            System.out.println("3. Bus - $700");
+            System.out.println("4. Train - $400");
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Choose a transport option: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("You have booked a Plane for $1500.");
+                    break;
+                case 2:
+                    System.out.println("You have booked a Boat for $1000.");
+                    break;
+                case 3:
+                    System.out.println("You have booked a Bus for $700.");
+                    break;
+                case 4:
+                    System.out.println("You have booked a Train for $400.");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
     }
+
+    public class ServiceManager {
+
+        public void showRoomServiceOptions() {
+            System.out.println("1. High Room Service - $200");
+            System.out.println("2. Mid Room Service - $100");
+            System.out.println("3. Low Room Service - $50");
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Choose a room service option: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("You have chosen High Room Service for $200.");
+                    break;
+                case 2:
+                    System.out.println("You have chosen Mid Room Service for $100.");
+                    break;
+                case 3:
+                    System.out.println("You have chosen Low Room Service for $50.");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+
+        public void showFoodOptions() {
+            System.out.println("1. All Package - $500");
+            System.out.println("2. 100 Items Buffet - $350");
+            System.out.println("3. 50 Items Buffet - $150");
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Choose a food service option: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("You have chosen the All Package for $500.");
+                    break;
+                case 2:
+                    System.out.println("You have chosen the 100 Items Buffet for $350.");
+                    break;
+                case 3:
+                    System.out.println("You have chosen the 50 Items Buffet for $150.");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+
+    class CustomerManager {
+
+        private ArrayList<Customer> customers;
+
+        public CustomerManager() {
+            customers = new ArrayList<>();
+        }
+
+        public void manageCustomer() {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Managing Customers:");
+            System.out.print("Enter Customer Name: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter Customer Age: ");
+            int age = scanner.nextInt();
+
+            System.out.print("Enter Customer Payment Amount: $");
+            double paymentAmount = scanner.nextDouble();
+
+            // Add the customer and their payment to the list
+            Customer newCustomer = new Customer(name, age, paymentAmount);
+            customers.add(newCustomer);
+
+            System.out.println("Customer added successfully!");
+            System.out.println("Payment of $" + paymentAmount + " recorded for " + name);
+        }
+
+        public ArrayList<Customer> getCustomerRecords() {
+            return customers;
+        }
+
+        public void showCustomerRecords() {
+            System.out.println("Customer Records:");
+            for (Customer customer : customers) {
+                System.out.println(customer);
+            }
+        }
+
+        public class TransitionManager {
+            public void handleTransitions(CustomerManager customerManager) {
+                ArrayList<Customer> customers = customerManager.getCustomerRecords();  // Get customer records
+
+                for (Customer customer : customers) {
+                    double payment = customer.getPaymentAmount();
+                    System.out.println("Payment from " + customer.toString() + ", Amount: $" + payment);
+                }
+
+                System.out.println("All payments have been processed.");
+            }
+        }
+    }
+
+    // Simple class to represent a Customer
+    public class Customer {
+        private String name;
+        private int age;
+        private double paymentAmount;
+
+        public Customer(String name, int age, double paymentAmount) {
+            this.name = name;
+            this.age = age;
+            this.paymentAmount = paymentAmount;
+        }
+
+        public double getPaymentAmount() {
+            return paymentAmount;
+        }
+
+        public String toString() {
+            return "Name: " + name + ", Age: " + age + ", Payment: $" + paymentAmount;
+        }
+    }
+
 }
+
